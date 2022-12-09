@@ -1,5 +1,5 @@
 #! /bin/bash
-if cmp -s "OGtext.txt" "decrypted.txt"
+if cmp -s "../OGtext.txt" "../decrypted.txt"
 then
 echo Algorithm Works!
 else

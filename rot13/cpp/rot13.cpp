@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctype.h>
 #include <fstream>
 #include <string>
 #include <map>
@@ -14,29 +15,10 @@ string rot13(string text, map<char, char> mapping) {
     return cipher_shift;
 }
 
-void test_cipher() {
-    // check if encryption works
-    ifstream file_1("../OGtext.txt");
-    string text_1((std::istreambuf_iterator<char>(file_1)),
-                (std::istreambuf_iterator<char>()));
-    file_1.close();
-    ifstream file_2("../decrypted.txt");
-    string text_2((std::istreambuf_iterator<char>(file_2)),
-                (std::istreambuf_iterator<char>()));
-    file_2.close();
-    if (text_1 == text_2) cout << true << '\n';
-    else cout << false << '\n';
-
-    cout << text_1.length() << '\n';
-    cout << text_2.length() << '\n';
-}
-
-int main() {
+int main(int argc, char *argv[]) {
     char choice;
-    while (choice != 'e' and choice != 'd') {
-        cout << "Want to encrypt or decrypt your cipher? Input e/d: ";
-        cin >> choice;
-    }
+    if (argc == 2 && isalpha(*argv[1])) choice = *argv[1];
+    else return 0;
 
     map<char, char> mapping;
     for (int i = 0; i < 26; i++) {
@@ -63,6 +45,4 @@ int main() {
         decrypted << rot13(text, mapping);
         decrypted.close();
     }
-    
-    test_cipher();
 }
