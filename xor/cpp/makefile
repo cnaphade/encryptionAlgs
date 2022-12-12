@@ -1,8 +1,5 @@
-test_random: xor
-	./testcpp.sh random
-
 test: xor
-	./testcpp.sh
+	./testcpp.sh $(random_arg) $(og_file) $(en_file) $(de_file)
 
 xor: xor.o
 	g++ xor.o -o xor
