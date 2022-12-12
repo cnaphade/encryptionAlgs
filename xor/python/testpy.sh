@@ -5,7 +5,7 @@ if [ "$1" = $arg ]
 	then
 		file_size=$(( RANDOM * 300 ))
 		pass_size=$(( $RANDOM % 50 + 1 ))
-		openssl rand -base64 $file_size > ../OGtext.txt
+		openssl rand -base64 $file_size > $2
 		pass=$(openssl rand -base64 $pass_size)
 		echo "file size: " $file_size
 fi

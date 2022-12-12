@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 	string password;
 	string in_file;
 	string out_file;
-	if (argc == 3 && isalpha(*argv[1])) {
+	if (argc == 5 && isalpha(*argv[1])) {
 		choice = *argv[1];
 		password = argv[2];
 		in_file = argv[3];
