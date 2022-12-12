@@ -2,6 +2,7 @@
 #include <fstream>
 #include <ctype.h>
 #include <string>
+#include <cstring>
 #include <iterator>
 using namespace std;
 
@@ -32,22 +33,24 @@ int main(int argc, char *argv[]) {
 	else return 0;
 
 	if (choice == 'e') {
-		ifstream ifs("../OGtext.txt");
+		ifstream ifs("../OGtext.txt", ios::in | ios::binary);
 		string text((istreambuf_iterator<char>(ifs)),
 					(istreambuf_iterator<char>()));
 		ifs.close();
-		ofstream encrypted("../encrypted.txt");
-		encrypted << xor_cipher(text, password);
+		string cipher_text = xor_cipher(text, password);
+		ofstream encrypted("../encrypted.txt", ios::out | ios::binary);
+		encrypted.write(cipher_text.c_str(), cipher_text.length());
 		encrypted.close();
 	}
 
 	if (choice == 'd') {
-		ifstream ifs("../encrypted.txt");
+		ifstream ifs("../encrypted.txt", ios::in | ios::binary);
 		string text((istreambuf_iterator<char>(ifs)),
 					(istreambuf_iterator<char>()));
 		ifs.close();
-		ofstream decrypted("../decrypted.txt");
-		decrypted << xor_cipher(text, password);
+		string cipher_text = xor_cipher(text, password);
+		ofstream decrypted("../decrypted.txt", ios::out | ios::binary);
+		decrypted.write(cipher_text.c_str(), cipher_text.length());
 		decrypted.close();
 	}
 }
