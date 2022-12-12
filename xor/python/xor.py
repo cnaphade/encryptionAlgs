@@ -22,20 +22,20 @@ def main():
 	args = parser.parse_args()
 
 	if args.choice == 'e':
-		file = open(text_path + '/OGtext.txt')
+		file = open(text_path + '/OGtext.txt', newline = '')
 		text = file.read()
 		file.close()
 
-		e_text = open(text_path + '/encrypted.txt', 'w')
+		e_text = open(text_path + '/encrypted.txt', 'w', newline = '')
 		e_text.write(xor(text, args.password))
 		e_text.close()
 
 	if args.choice == 'd':
-		file = open(text_path + '/encrypted.txt')
+		file = open(text_path + '/encrypted.txt', newline = '')
 		text = file.read()
 		file.close()
 
-		d_text = open(text_path + '/decrypted.txt', 'w')
+		d_text = open(text_path + '/decrypted.txt', 'w', newline = '')
 		d_text.write(xor(text, args.password))
 		d_text.close()
 

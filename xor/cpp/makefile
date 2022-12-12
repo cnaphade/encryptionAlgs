@@ -1,3 +1,9 @@
+test_random: xor
+	./testcpp.sh random
+
+test: xor
+	./testcpp.sh
+
 xor: xor.o
 	g++ xor.o -o xor
 
