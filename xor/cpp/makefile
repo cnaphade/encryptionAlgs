@@ -1,5 +1,5 @@
 test: xor
-	./testcpp.sh $(random) $(og_file) $(en_file) $(de_file)
+	./testcpp.sh $(random)
 
 xor: xor.o
 	g++ xor.o -o xor
