@@ -9,7 +9,7 @@ for i in {0..40}
 do
 	if [ "$1" = $random ]
 		then
-			file_size=$(( $RANDOM * 100 ))
+			file_size=$(( $RANDOM * 300 ))
 			pass_size=$(( $RANDOM % 50 + 1 ))
 			openssl rand $file_size > $og_file
 			pass=$(openssl rand $pass_size | base64)
