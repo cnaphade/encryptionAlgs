@@ -21,7 +21,7 @@ do
 	if cmp -s $og_file $de_file
 		then
 			pass_size=$(( $RANDOM % 10 + 1 ))
-			pass=$(openssl rand $pass_size | base64 )
+			pass=$(openssl rand $pass_size | base64)
 			./xor $pass $en_file $de_file
 			if cmp -s $og_file $de_file
 				then

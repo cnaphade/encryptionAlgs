@@ -1,32 +1,41 @@
 #! /bin/bash
-arg="random"
+random="true"
 pass="password"
-if [ "$1" = $arg ]
-	then
-		file_size=$(( RANDOM * 300 ))
-		pass_size=$(( $RANDOM % 50 + 1 ))
-		openssl rand -base64 $file_size > $2
-		pass=$(openssl rand -base64 $pass_size)
-		echo "file size: " $file_size
-fi
+og_file=../OGtext.txt
+en_file=../encrypted.txt
+de_file=../decrypted.txt
 
-echo "password: " $pass
-echo "password size: " ${#pass}
-python3 xor.py --password $pass --in_file $2 --out_file $3
-python3 xor.py --password $pass --in_file $3 --out_file $4
+for i in {0..40}
+do
+	if [ "$1" = $random ]
+		then
+			file_size=$(( $RANDOM * 300 ))
+			pass_size=$(( $RANDOM % 50 + 1 ))
+			openssl rand $file_size > $og_file
+			pass=$(openssl rand $pass_size | base64)
+	fi
 
-if cmp -s $2 $4
-	then
-		pass_size=$(( $RANDOM % 10 + 1 ))
-		echo "test pass size: " $pass_size
-		pass=$(openssl rand -base64 $pass_size)
-		python3 xor.py --password $pass --in_file $3 --out_file $4
-		if cmp -s $2 $4
-			then
-				echo Failure!
-			else
-				echo Algorithm Works!
-		fi
-	else
-		echo Failure!
-fi
+	python3 xor.py --password $pass --in_file $og_file --out_file $en_file
+	python3 xor.py --password $pass --in_file $en_file --out_file $de_file
+
+	if cmp -s $og_file $de_file
+		then
+			pass_size=$(( $RANDOM % 10 + 1 ))
+			pass=$(openssl rand $pass_size | base64)
+			python3 xor.py --password $pass --in_file $en_file --out_file $de_file
+			if cmp -s $og_file $de_file
+				then
+					echo "password: " $pass
+					echo "password size: " ${#pass}
+					echo "test pass: " $pass
+					echo "test pass size: " $pass_size
+					echo $i Failure!
+				else
+					echo $i Algorithm Works!
+			fi
+		else
+			echo "password: " $pass
+			echo "password size: " ${#pass}
+			echo $i Failure!
+	fi
+done
